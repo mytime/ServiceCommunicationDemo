@@ -2,19 +2,30 @@ package com.yanwanfu.servicecommunicationdemo;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 
 public class MyService extends Service {
 
     private boolean running = false;
-    private String data = "默认内容";
+    private String data = "service默认内容";
 
     public MyService() {
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        //返回自定义Binder的实例对象，在onServiceConnected 中接收（IBinder service）
+        return new Binder();
+    }
+
+    //自定义Binder
+    public class Binder extends android.os.Binder {
+        //set 方法
+        public void setData(String data) {
+            //重新给data赋值
+            MyService.this.data = data;
+        }
     }
 
     //第一次启动startService()执行onCreate()，
@@ -43,7 +54,7 @@ public class MyService extends Service {
 
 
     private void iniMsg() {
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();

@@ -7,8 +7,15 @@
     tools:context="com.yanwanfu.servicecommunicationdemo.MainActivity">
 
     <EditText
-        android:text="默认信息"
+        android:text="EditText信息"
         android:id="@+id/et_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:text="启动服务并与服务通信"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
@@ -19,6 +26,29 @@
     <Button
         android:id="@+id/btn_stop"
         android:text="@string/stop_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:text="绑定服务并与服务通信"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_bind"
+        android:text="@string/bind_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/sync_data"
+        android:textAllCaps="false"
+        android:text="同步EditText内容到service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_unbind"
+        android:text="解除绑定"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
