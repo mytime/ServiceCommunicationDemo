@@ -5,6 +5,19 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+/**
+ * 执行顺序
+ * startService:
+ *      -> onCreate
+ *      -> onStartCommand
+ *      -> onDestroy
+ *
+ * bindService :
+ *      -> onCreate
+ *      -> onBind
+ *      -> onServicConnected
+ *
+ */
 public class MyService extends Service {
 
     private boolean running = false;
@@ -25,6 +38,12 @@ public class MyService extends Service {
         public void setData(String data) {
             //重新给data赋值
             MyService.this.data = data;
+        }
+
+        //向外部公开一个绑定事件的函数
+        //绑定的事件是：
+        public MyService getService(){
+            return MyService.this;
         }
     }
 
@@ -54,14 +73,24 @@ public class MyService extends Service {
 
 
     private void iniMsg() {
+        running = true;
         new Thread() {
             @Override
             public void run() {
                 super.run();
-                running = true;
+
+                int i = 0;
                 //无限循环
                 while (running) {
-                    System.out.println(data);
+                    i++;
+                    String str = i+":"+data;
+                    System.out.println(str);
+                    //把数据发送到服务的外部
+                    //由public MyService getService()向外部公开数据
+                    if (callBack != null){
+                        callBack.onDataChanage(str);
+                    }
+
                     try {
                         sleep(1000);
                     } catch (InterruptedException e) {
@@ -70,5 +99,21 @@ public class MyService extends Service {
                 }
             }
         }.start();
+    }
+
+
+    //接口
+    public static interface CallBack{
+        void onDataChanage(String data);
+    }
+
+    //CallBack类型的变量
+    private CallBack callBack = null;
+    // 向外部公开 设置和获取callBack变量
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
+    public CallBack getCallBack() {
+        return callBack;
     }
 }

@@ -51,4 +51,12 @@
         android:text="解除绑定"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:textSize="18sp"
+        android:id="@+id/tv_out"
+        android:text="显示service里面的信息"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
